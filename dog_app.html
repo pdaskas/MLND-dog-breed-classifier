@@ -14699,7 +14699,7 @@ test_{network} = bottleneck_features['test']</code></pre>
 
 </code></pre>
 <p><strong>Question 5:</strong> Outline the steps you took to get to your final CNN architecture and your reasoning at each step.  Describe why you think the architecture is suitable for the current problem.</p>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> I elected to use the Resnet50 pretrained model.  I augmented this model by adding a global average pooling layer and a dense layer.  The dense fully connected layer contains one node for each dog category and is uses a softmax activation function..</p>
 
 </div>
 </div>
