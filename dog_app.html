@@ -11816,7 +11816,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">load_files</span>       
@@ -14079,7 +14079,7 @@ physical_device_desc: &#34;device: 0, name: GeForce GTX 1060 6GB, pci bus id: 00
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="k">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">GlobalAveragePooling2D</span>
@@ -14124,27 +14124,27 @@ physical_device_desc: &#34;device: 0, name: GeForce GTX 1060 6GB, pci bus id: 00
 <pre>_________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-conv2d_17 (Conv2D)           (None, 223, 223, 16)      208       
+conv2d_1 (Conv2D)            (None, 223, 223, 16)      208       
 _________________________________________________________________
-max_pooling2d_45 (MaxPooling (None, 111, 111, 16)      0         
+max_pooling2d_1 (MaxPooling2 (None, 111, 111, 16)      0         
 _________________________________________________________________
-batch_normalization_14 (Batc (None, 111, 111, 16)      64        
+batch_normalization_1 (Batch (None, 111, 111, 16)      64        
 _________________________________________________________________
-conv2d_18 (Conv2D)           (None, 110, 110, 32)      2080      
+conv2d_2 (Conv2D)            (None, 110, 110, 32)      2080      
 _________________________________________________________________
-max_pooling2d_46 (MaxPooling (None, 55, 55, 32)        0         
+max_pooling2d_2 (MaxPooling2 (None, 55, 55, 32)        0         
 _________________________________________________________________
-batch_normalization_15 (Batc (None, 55, 55, 32)        128       
+batch_normalization_2 (Batch (None, 55, 55, 32)        128       
 _________________________________________________________________
-conv2d_19 (Conv2D)           (None, 54, 54, 64)        8256      
+conv2d_3 (Conv2D)            (None, 54, 54, 64)        8256      
 _________________________________________________________________
-max_pooling2d_47 (MaxPooling (None, 27, 27, 64)        0         
+max_pooling2d_3 (MaxPooling2 (None, 27, 27, 64)        0         
 _________________________________________________________________
-batch_normalization_16 (Batc (None, 27, 27, 64)        256       
+batch_normalization_3 (Batch (None, 27, 27, 64)        256       
 _________________________________________________________________
-global_average_pooling2d_9 ( (None, 64)                0         
+global_average_pooling2d_1 ( (None, 64)                0         
 _________________________________________________________________
-dense_9 (Dense)              (None, 133)               8645      
+dense_1 (Dense)              (None, 133)               8645      
 =================================================================
 Total params: 19,637.0
 Trainable params: 19,413.0
@@ -14673,7 +14673,7 @@ test_{network} = bottleneck_features['test']</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### TODO: Obtain bottleneck features from another pre-trained CNN.</span>
@@ -14699,19 +14699,25 @@ test_{network} = bottleneck_features['test']</code></pre>
 
 </code></pre>
 <p><strong>Question 5:</strong> Outline the steps you took to get to your final CNN architecture and your reasoning at each step.  Describe why you think the architecture is suitable for the current problem.</p>
-<p><strong>Answer:</strong> I elected to use the Resnet50 pretrained model.  I augmented this model by adding a global average pooling layer and a dense layer.  The dense fully connected layer contains one node for each dog category and is uses a softmax activation function..</p>
+<p><strong>Answer:</strong></p>
+<p>Pretrained models can be applied to new data (transfer learning).</p>
+<p>The model built from scratch was comprised of 3 convolutional layers and was trained on a small set of data.  Edges or blobs of color are determined from the first convolutional layer.  The second layer detects basic shape such as circles or rectangles.
+The final filter is specific.  The accuracy was slightly greater than 1% which is better than selecting randomly on 1/133. Resnet50 is trained on a larger dataset and is finely tuned.  The dog images are a subset of data used for training Resnet50.</p>
+<p>I created a new model and leveraged the pretrained Resnet50 model by adding a global average pooling layer and a dense layer.  GAP (global average pooling) is used for dimensionality reduction.  We now have less trainable parameters.  The model only has two layers and the training process is quick. The dense fully connected layer contains one node for each dog category and it uses a softmax activation function.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### TODO: Define your architecture.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train_Resnet50</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="c1">### TODO: Define your architecture.</span>
 <span class="n">Resnet50_model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
 <span class="n">Resnet50_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">GlobalAveragePooling2D</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">train_Resnet50</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+<span class="c1">#Resnet50_model.add(Flatten(input_shape=(7,7,512)))</span>
 <span class="n">Resnet50_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">133</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
 
 <span class="n">Resnet50_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
@@ -14729,12 +14735,13 @@ test_{network} = bottleneck_features['test']</code></pre>
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>_________________________________________________________________
+<pre>(1, 1, 2048)
+_________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-global_average_pooling2d_6 ( (None, 2048)              0         
+global_average_pooling2d_5 ( (None, 2048)              0         
 _________________________________________________________________
-dense_6 (Dense)              (None, 133)               272517    
+dense_8 (Dense)              (None, 133)               272517    
 =================================================================
 Total params: 272,517.0
 Trainable params: 272,517.0
